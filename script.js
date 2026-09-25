@@ -2,14 +2,27 @@
    HAPPY BIRTHDAY MARI — script.js
    Vanilla JS only. No frameworks.
    ============================================================ */
+
+// Global handler for inline HTML image onerror attributes
+window.handleImageError = function (img) {
+  if (!img) return;
+  const frame = img.parentElement;
+  if (frame && !frame.querySelector('.companion-fallback')) {
+    const fb = document.createElement('div');
+    fb.className = 'companion-fallback';
+    fb.id = 'companion-fallback';
+    frame.innerHTML = '';
+    frame.appendChild(fb);
+  }
+};
+
 (function () {
   'use strict';
 
   /* ---------------------------------------------------------
      UTILITIES
   --------------------------------------------------------- */
-  const $ = (sel, ctx) => (ctx || document).querySelector(sel);
-  const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
+  const $ = (sel, ctx) => (ctx \vert{}\vert{} document).querySelector(sel);   const $$ = (sel, ctx) => Array.from((ctx || document).querySelectorAll(sel));
   const rand = (min, max) => Math.random() * (max - min) + min;
   const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -56,11 +69,11 @@
     bloom.className = 'bloom';
     bloom.style.left = x + '%';
     bloom.style.bottom = y + 'px';
-    bloom.style.animation = `petal-fall-none 0s`; // placeholder, sway handled by parent
+    bloom.style.animation = `petal-fall-none 0s`;
     bloom.innerHTML = `
-      <div class="bloom-petal-ring" style="animation: bouquet-sway ${rand(3.5,5.5)}s ease-in-out ${delay}s infinite; transform-origin:bottom center;">
-        ${colors.map((c, i) => `<span style="background:${c}; transform: translate(-50%,-50%) rotate(${i * 60}deg) translateY(-7px); width:${size}px; height:${size*1.3}px;"></span>`).join('')}
-        <div style="position:absolute; left:50%; top:50%; width:${size*0.5}px; height:${size*0.5}px; border-radius:50%; background:#D9B67E; transform:translate(-50%,-50%);"></div>
+      <div class="bloom-petal-ring" style="animation: bouquet-sway ${rand(3.5, 5.5)}s ease-in-out ${delay}s infinite; transform-origin:bottom center;">
+        ${colors.map((c, i) => `<span style="background:${c}; transform: translate(-50\%,-50\%) rotate(${i * 60}deg) translateY(-7px); width:${size}px; height:${size * 1.3}px;"></span>`).join('')}
+        <div style="position:absolute; left:50%; top:50%; width:${size * 0.5}px; height:${size * 0.5}px; border-radius:50%; background:#D9B67E; transform:translate(-50%,-50%);"></div>
       </div>
     `;
     return bloom;
@@ -75,10 +88,10 @@
     flowersEl.className = 'bouquet-flowers';
 
     const palette = [
-      ['#FF9EBB', '#FFC4D6', '#FFD9E4'], // rose
-      ['#FFB6C9', '#FFE1EC', '#FF8FA9'], // tulip
-      ['#FFD6E8', '#FFF0F5', '#FFB6C9'], // cherry blossom
-      ['#F7A8C4', '#FFC9DB', '#F58FAF'], // peony
+      ['#FF9EBB', '#FFC4D6', '#FFD9E4'],
+      ['#FFB6C9', '#FFE1EC', '#FF8FA9'],
+      ['#FFD6E8', '#FFF0F5', '#FFB6C9'],
+      ['#F7A8C4', '#FFC9DB', '#F58FAF'],
     ];
 
     const positions = [
@@ -98,10 +111,9 @@
       flowersEl.appendChild(bloom);
     });
 
-    // baby's breath dots
     for (let i = 0; i < 14; i++) {
       const dot = document.createElement('span');
-      dot.style.cssText = `position:absolute; left:${rand(10,90)}%; bottom:${rand(20,80)}px; width:4px; height:4px; border-radius:50%; background:#fff; box-shadow:0 0 3px rgba(255,255,255,0.9);`;
+      dot.style.cssText = `position:absolute; left:${rand(10, 90)}%; bottom:${rand(20, 80)}px; width:4px; height:4px; border-radius:50%; background:#fff; box-shadow:0 0 3px rgba(255,255,255,0.9);`;
       flowersEl.appendChild(dot);
     }
 
@@ -137,16 +149,13 @@
         <circle cx="60" cy="70" r="2.4" fill="#FF8FA3"/>
         <path d="M55 74 Q60 78 65 74" stroke="#3B2417" stroke-width="1.8" fill="none" stroke-linecap="round"/>
         <path d="M30 66 L46 68 M30 72 L46 71 M74 68 L90 66 M74 71 L90 72" stroke="#fff" stroke-width="1" opacity="0.7"/>
-        <!-- birthday hat -->
         <g transform="translate(60,22) rotate(-8)">
           <path d="M-14 8 L0 -22 L14 8 Z" fill="#FFB6C9"/>
           <circle cx="0" cy="-22" r="4" fill="#fff"/>
           <rect x="-14" y="5" width="28" height="5" rx="2" fill="#D9B67E"/>
         </g>
-        <!-- ribbon collar -->
         <path d="M62 96 Q82 102 102 96" stroke="#FF8FA9" stroke-width="6" fill="none" stroke-linecap="round"/>
         <circle cx="82" cy="100" r="4" fill="#C98E9D"/>
-        <!-- flower near ear -->
         <g transform="translate(30,44)">
           <circle r="4" fill="#FF7CA3"/>
           <circle cx="5" cy="-2" r="3.4" fill="#FFB6C9"/>
@@ -163,40 +172,29 @@
      MOUNT SCENE ELEMENTS
   --------------------------------------------------------- */
   function mountScenes() {
-    $('#hero-cake-wrap').appendChild(buildCake());
-    $('#hero-bouquet-mini').appendChild(buildBouquet());
-    $('#hero-cat').appendChild(buildCat({ size: 110 }));
+    const heroCakeWrap = $('#hero-cake-wrap');
+    const heroBouquetMini = $('#hero-bouquet-mini');
+    const heroCat = $('#hero-cat');
+    const bouquetStage = $('#bouquet-stage');
+    const cakeStage = $('#cake-stage');
 
-    $('#bouquet-stage').appendChild(buildBouquet());
-
-    $('#cake-stage').appendChild(buildCake({ big: true }));
+    if (heroCakeWrap) heroCakeWrap.appendChild(buildCake());
+    if (heroBouquetMini) heroBouquetMini.appendChild(buildBouquet());
+    if (heroCat) heroCat.appendChild(buildCat({ size: 110 }));
+    if (bouquetStage) bouquetStage.appendChild(buildBouquet());
+    if (cakeStage) cakeStage.appendChild(buildCake({ big: true }));
 
     const decor = $('.companion-decor');
     if (decor) {
       decor.appendChild(scatterEmoji(['💗', '✨', '🐾', '🌸'], 10));
     }
-
-    // Companion photo fallback (if assets/my-cat.png is missing) is handled
-    // separately by setupCompanionFallback(), which swaps in an illustrated
-    // placeholder so the layout never breaks.
   }
 
-  // simpler + robust companion fallback: check image load, swap manually
   function setupCompanionFallback() {
     const img = $('#companion-photo');
     if (!img) return;
-    const frame = img.parentElement;
-    const showFallback = () => {
-      if ($('#companion-fallback')) return;
-      const fb = document.createElement('div');
-      fb.className = 'companion-fallback';
-      fb.id = 'companion-fallback';
-      frame.innerHTML = '';
-      frame.appendChild(fb);
-    };
-    img.addEventListener('error', showFallback, { once: true });
-    // if already broken (cached) recheck
-    if (img.complete && img.naturalWidth === 0) showFallback();
+    img.addEventListener('error', () => window.handleImageError(img), { once: true });
+    if (img.complete && img.naturalWidth === 0) window.handleImageError(img);
   }
 
   function scatterEmoji(list, count) {
@@ -204,11 +202,11 @@
     for (let i = 0; i < count; i++) {
       const span = document.createElement('span');
       span.textContent = list[Math.floor(rand(0, list.length))];
-      span.style.cssText = `position:absolute; left:${rand(0,100)}%; top:${rand(0,100)}%; font-size:${rand(12,20)}px; opacity:${rand(0.3,0.7)}; animation: sparkle-twinkle ${rand(2,4)}s ease-in-out ${rand(0,2)}s infinite;`;
+      span.style.cssText = `position:absolute; left:${rand(0, 100)}%; top:${rand(0, 100)}%; font-size:${rand(12, 20)}px; opacity:${rand(0.3, 0.7)}; animation: sparkle-twinkle ${rand(2, 4)}s ease-in-out ${rand(0, 2)}s infinite;`;
       frag.appendChild(span);
     }
     const holder = document.createElement('div');
-    holder.style.cssText = 'position:absolute; inset:0;';
+    holder.style.cssText = 'position:absolute; inset:0; pointer-events:none;';
     holder.appendChild(frag);
     return holder;
   }
@@ -218,6 +216,8 @@
   --------------------------------------------------------- */
   function initLoadingScreen() {
     const screen = $('#loading-screen');
+    if (!screen) return;
+
     const fill = $('#paw-progress-fill');
     const percentLabel = $('#loading-percent');
     const messageEl = $('#loading-message');
@@ -233,16 +233,19 @@
       'Almost Ready...',
     ];
 
-    // spawn floating petals/hearts/sparkles on loading screen
     spawnDecor($('.loading-petals'), 'petal', 16);
     spawnDecor($('.loading-hearts'), 'heart', 10);
     spawnDecor($('.loading-sparkles'), 'sparkle', 14);
 
-    catTrack.classList.add('walking');
+    if (catTrack) catTrack.classList.add('walking');
+
     let pawInterval = setInterval(() => {
+      if (!catTrack || !pawTrail) return;
       const mark = document.createElement('span');
       mark.className = 'paw-mark';
-      const trackRect = catTrack.parentElement.getBoundingClientRect();
+      const trackParent = catTrack.parentElement;
+      if (!trackParent) return;
+      const trackRect = trackParent.getBoundingClientRect();
       const catRect = catTrack.getBoundingClientRect();
       const relLeft = catRect.left - trackRect.left + catRect.width * 0.35;
       mark.style.left = relLeft + 'px';
@@ -253,16 +256,16 @@
 
     let progress = 0;
     let msgIndex = 0;
-    messageEl.textContent = messages[0];
+    if (messageEl) messageEl.textContent = messages[0];
 
     const tick = setInterval(() => {
       progress += rand(4, 9);
       if (progress >= 100) progress = 100;
-      fill.style.width = progress + '%';
-      percentLabel.textContent = Math.floor(progress) + '%';
+      if (fill) fill.style.width = progress + '%';
+      if (percentLabel) percentLabel.textContent = Math.floor(progress) + '%';
 
       const newMsgIndex = Math.min(messages.length - 1, Math.floor((progress / 100) * messages.length));
-      if (newMsgIndex !== msgIndex) {
+      if (newMsgIndex !== msgIndex && messageEl) {
         msgIndex = newMsgIndex;
         messageEl.style.opacity = 0;
         setTimeout(() => {
@@ -279,9 +282,10 @@
     }, 220);
 
     function finishLoading() {
-      // cat jump celebration + confetti burst on loading screen
-      catTrack.style.transition = 'transform 0.5s ease';
-      catTrack.style.transform = 'translateY(-20px) scale(1.1)';
+      if (catTrack) {
+        catTrack.style.transition = 'transform 0.5s ease';
+        catTrack.style.transform = 'translateY(-20px) scale(1.1)';
+      }
       burstConfettiOnce(screen);
 
       setTimeout(() => {
@@ -319,6 +323,7 @@
   }
 
   function burstConfettiOnce(container) {
+    if (!container) return;
     for (let i = 0; i < 26; i++) {
       const piece = document.createElement('div');
       const colors = ['#FFB6C9', '#D9B67E', '#C98E9D', '#FFF9F5', '#FF8FA9'];
@@ -343,6 +348,7 @@
 
   function revealSite() {
     const site = $('#site');
+    if (!site) return;
     site.classList.remove('hidden-site');
     site.style.opacity = 0;
     requestAnimationFrame(() => {
@@ -352,30 +358,12 @@
   }
 
   /* ---------------------------------------------------------
-     AMBIENT BACKGROUND PARTICLES (petals / hearts / sparkles / paw prints for whole site)
+     AMBIENT BACKGROUND PARTICLES
   --------------------------------------------------------- */
   function initAmbientDecor() {
-    document.querySelectorAll('.section').forEach((section) => {
-      const layer = document.createElement('div');
-      layer.style.cssText = 'position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;';
-      spawnDecor(layer, 'petal', 5);
-      spawnDecor(layer, 'sparkle', 6);
-      const paw = document.createElement('span');
-      paw.className = 'decor-paw';
-      paw.textContent = '🐾';
-      paw.style.left = rand(5, 90) + '%';
-      paw.style.top = rand(10, 85) + '%';
-      layer.appendChild(paw);
-      section.style.position = section.style.position || 'relative';
-      section.prepend(layer);
-    });
-  }
-
-  /* ---------------------------------------------------------
-     DOT NAV ACTIVE STATE
-  --------------------------------------------------------- */
-  function initDotNav() {
-    const dots = $$('.dot-nav .dot');
+    $$('.section').forEach((section) => {       const layer = document.createElement('div');       layer.style.cssText = 'position:absolute; inset:0; overflow:hidden; pointer-events:none; z-index:0;';       spawnDecor(layer, 'petal', 5);       spawnDecor(layer, 'sparkle', 6);       const paw = document.createElement('span');       paw.className = 'decor-paw';       paw.textContent = '🐾';       paw.style.left = rand(5, 90) + '\%';       paw.style.top = rand(10, 85) + '\%';       layer.appendChild(paw);       section.style.position = section.style.position \vert{}\vert{} 'relative';       section.prepend(layer);     });   }    /* ---------------------------------------------------------      DOT NAV ACTIVE STATE   --------------------------------------------------------- */   function initDotNav() {     const dots = $$
+('.dot-nav .dot');
+    if (!dots.length) return;
     const sections = dots.map((d) => document.querySelector(d.getAttribute('href')));
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((entry) => {
@@ -395,6 +383,7 @@
   function initWish() {
     const cakeStage = $('#cake-stage');
     const wishSent = $('#wish-sent');
+    if (!cakeStage) return;
     let blown = false;
 
     cakeStage.addEventListener('click', () => {
@@ -408,7 +397,7 @@
       if (smoke) smoke.classList.add('rise');
       if (glow) glow.classList.add('on');
 
-      wishSent.classList.remove('hidden');
+      if (wishSent) wishSent.classList.remove('hidden');
       launchCelebration({ heavy: true, origin: cakeStage.getBoundingClientRect() });
     });
   }
@@ -419,10 +408,11 @@
   function initEnvelope() {
     const envelope = $('#envelope');
     const hint = $('#envelope-hint');
+    if (!envelope) return;
     envelope.addEventListener('click', () => {
       const opening = !envelope.classList.contains('open');
       envelope.classList.toggle('open');
-      hint.textContent = opening ? 'tap the envelope to close' : 'tap the envelope to open';
+      if (hint) hint.textContent = opening ? 'tap the envelope to close' : 'tap the envelope to open';
       if (opening) {
         spawnDecor(envelope.parentElement, 'heart', 6);
       }
@@ -433,28 +423,44 @@
      BUTTONS: celebrate / scroll shortcuts
   --------------------------------------------------------- */
   function initButtons() {
-    $('#celebrate-btn').addEventListener('click', (e) => {
-      launchCelebration({ heavy: true, origin: e.target.getBoundingClientRect() });
-      const heroCat = $('#hero-cat .cat-mini');
-      if (heroCat) {
-        heroCat.classList.remove('celebrating');
-        void heroCat.offsetWidth;
-        heroCat.classList.add('celebrating');
-      }
-      const heroCake = $('#hero-cake-wrap .cake-glow');
-      if (heroCake) { heroCake.classList.add('on'); setTimeout(() => heroCake.classList.remove('on'), 1800); }
-    });
+    const celebrateBtn = $('#celebrate-btn');
+    const wishScrollBtn = $('#wish-scroll-btn');
+    const letterScrollBtn = $('#letter-scroll-btn');
 
-    $('#wish-scroll-btn').addEventListener('click', () => {
-      $('#cake').scrollIntoView({ behavior: 'smooth' });
-    });
-    $('#letter-scroll-btn').addEventListener('click', () => {
-      $('#letter').scrollIntoView({ behavior: 'smooth' });
-    });
+    if (celebrateBtn) {
+      celebrateBtn.addEventListener('click', (e) => {
+        launchCelebration({ heavy: true, origin: e.target.getBoundingClientRect() });
+        const heroCat = $('#hero-cat .cat-mini');
+        if (heroCat) {
+          heroCat.classList.remove('celebrating');
+          void heroCat.offsetWidth;
+          heroCat.classList.add('celebrating');
+        }
+        const heroCake = $('#hero-cake-wrap .cake-glow');
+        if (heroCake) {
+          heroCake.classList.add('on');
+          setTimeout(() => heroCake.classList.remove('on'), 1800);
+        }
+      });
+    }
+
+    if (wishScrollBtn) {
+      wishScrollBtn.addEventListener('click', () => {
+        const cakeSection = $('#cake');
+        if (cakeSection) cakeSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
+
+    if (letterScrollBtn) {
+      letterScrollBtn.addEventListener('click', () => {
+        const letterSection = $('#letter');
+        if (letterSection) letterSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    }
   }
 
   /* ---------------------------------------------------------
-     CELEBRATION ENGINE (confetti / petals / hearts / balloons / gold particles)
+     CELEBRATION ENGINE
   --------------------------------------------------------- */
   const celebCanvas = document.getElementById('celebration-canvas');
   const cctx = celebCanvas ? celebCanvas.getContext('2d') : null;
@@ -462,7 +468,7 @@
   let celebAnimId = null;
 
   function resizeCelebCanvas() {
-    if (!celebCanvas) return;
+    if (!celebCanvas || !cctx) return;
     celebCanvas.width = window.innerWidth * devicePixelRatio;
     celebCanvas.height = window.innerHeight * devicePixelRatio;
     celebCanvas.style.width = window.innerWidth + 'px';
@@ -475,24 +481,19 @@
   const CELEB_COLORS = ['#FFB6C9', '#F9E8EF', '#C98E9D', '#D9B67E', '#FF8FA9', '#FFF9F5'];
 
   function launchCelebration({ heavy = false, origin } = {}) {
-    if (prefersReducedMotion) return;
+    if (prefersReducedMotion || !celebCanvas) return;
     const originX = origin ? origin.left + origin.width / 2 : window.innerWidth / 2;
     const originY = origin ? origin.top : window.innerHeight * 0.3;
     const count = heavy ? 90 : 50;
 
     for (let i = 0; i < count; i++) {
-      const kind = pickKind();
-      celebParticles.push(makeParticle(kind, originX, originY));
+      celebParticles.push(makeParticle(pickKind(), originX, originY));
     }
-    // balloons rise from bottom
     for (let i = 0; i < (heavy ? 6 : 3); i++) {
       celebParticles.push(makeBalloon());
     }
 
     if (!celebAnimId) animateCelebration();
-    setTimeout(() => {
-      celebParticles = celebParticles.filter((p) => Date.now() - p.born < 100); // safety trim handled in loop too
-    }, 6000);
   }
 
   function pickKind() {
@@ -534,6 +535,7 @@
   }
 
   function animateCelebration() {
+    if (!cctx) return;
     cctx.clearRect(0, 0, celebCanvas.width, celebCanvas.height);
     const now = Date.now();
     celebParticles = celebParticles.filter((p) => now - p.born < p.life);
@@ -547,7 +549,7 @@
 
       cctx.save();
       cctx.translate(p.x, p.y);
-      cctx.globalAlpha = 1 - age;
+      cctx.globalAlpha = Math.max(0, 1 - age);
 
       if (p.kind === 'confetti') {
         cctx.rotate((p.rot * Math.PI) / 180);
@@ -621,55 +623,7 @@
     const icon = $('#music-icon');
     const muteBtn = $('#mute-toggle');
     const volumeSlider = $('#volume-slider');
-    const prompt = $('#music-prompt');
-    audio.volume = 0.55;
-
-    let userInteracted = false;
-
-    function play() {
-      audio.play().then(() => {
-        toggleBtn.classList.add('playing');
-        icon.textContent = '🎵';
-        prompt.classList.remove('show');
-      }).catch(() => {
-        prompt.classList.add('show');
-      });
-    }
-    function pause() {
-      audio.pause();
-      toggleBtn.classList.remove('playing');
-      icon.textContent = '🎶';
-    }
-
-    // attempt autoplay
-    play();
-
-    toggleBtn.addEventListener('click', () => {
-      userInteracted = true;
-      if (audio.paused) play(); else pause();
-    });
-
-    muteBtn.addEventListener('click', () => {
-      audio.muted = !audio.muted;
-      muteBtn.textContent = audio.muted ? '🔇' : '🔊';
-    });
-
-    volumeSlider.addEventListener('input', (e) => {
-      audio.volume = e.target.value / 100;
-    });
-
-    const tapToStart = () => {
-      if (!userInteracted && audio.paused) play();
-      document.removeEventListener('click', tapToStart);
-    };
-    document.addEventListener('click', tapToStart);
-  }
-
-  /* ---------------------------------------------------------
-     GALLERY: pre-check broken images (in case onerror missed due to cache)
-  --------------------------------------------------------- */
-  function initGalleryFallbacks() {
-    $$('.gallery-card img').forEach((img) => {
+    const prompt = $('#music-prompt');     if (!audio) return;      audio.volume = 0.55;     let userInteracted = false;      function play() {       audio.play().then(() => {         if (toggleBtn) toggleBtn.classList.add('playing');         if (icon) icon.textContent = '🎵';         if (prompt) prompt.classList.remove('show');       }).catch(() => {         if (prompt) prompt.classList.add('show');       });     }      function pause() {       audio.pause();       if (toggleBtn) toggleBtn.classList.remove('playing');       if (icon) icon.textContent = '🎶';     }      play();      if (toggleBtn) {       toggleBtn.addEventListener('click', () => {         userInteracted = true;         if (audio.paused) play(); else pause();       });     }      if (muteBtn) {       muteBtn.addEventListener('click', () => {         audio.muted = !audio.muted;         muteBtn.textContent = audio.muted ? '🔇' : '🔊';       });     }      if (volumeSlider) {       volumeSlider.addEventListener('input', (e) => {         audio.volume = e.target.value / 100;       });     }      const tapToStart = () => {       if (!userInteracted && audio.paused) play();       document.removeEventListener('click', tapToStart);     };     document.addEventListener('click', tapToStart);   }    /* ---------------------------------------------------------      GALLERY FALLBACKS   --------------------------------------------------------- */   function initGalleryFallbacks() {     $$('.gallery-card img').forEach((img) => {
       if (img.complete && img.naturalWidth === 0) {
         img.parentElement.classList.add('gallery-fallback');
       }
@@ -677,7 +631,7 @@
   }
 
   /* ---------------------------------------------------------
-     WANDERING CAT (occasionally walks around and rests near cake)
+     WANDERING CAT
   --------------------------------------------------------- */
   function initWanderingCat() {
     if (prefersReducedMotion) return;
