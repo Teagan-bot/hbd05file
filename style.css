@@ -90,7 +90,7 @@ a{ text-decoration:none; color:inherit; }
 #site.hidden-site{ opacity:0; visibility:hidden; transition: opacity 0.8s ease; }
 
 /* ============================================================
-   LOADING SCREEN
+   LOADING SCREEN (DAISY FLOWER LOADER)
    ============================================================ */
 #loading-screen{
   position:fixed; inset:0; z-index:999;
@@ -111,64 +111,105 @@ a{ text-decoration:none; color:inherit; }
   font-family:var(--font-display); font-size:clamp(1.4rem,5vw,1.9rem);
   color:var(--daisy-yellow); letter-spacing:0.5px;
 }
-.loading-cat-track{ position:relative; width:100%; height:120px; }
 
-/* transform added to flip the cat svg so it walks forward */
-.loading-cat{ position:absolute; left:-40px; top:0; width:150px; transform: scaleX(-1); }
-
-.cat-run-svg{ width:100%; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.4)); }
-.cat-shadow{ opacity:0.35; fill: #08120B; }
-.cat-body-group{ animation: cat-bounce 0.5s ease-in-out infinite; transform-origin:center bottom; }
-@keyframes cat-bounce{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-6px);} }
-.cat-tail{ transform-origin: 158px 95px; animation: tail-wag 0.6s ease-in-out infinite; }
-@keyframes tail-wag{ 0%,100%{ transform:rotate(0deg);} 50%{ transform:rotate(-12deg);} }
-.cat-leg{ transform-origin: top center; }
-.cat-leg-1{ animation: leg-run-a 0.4s linear infinite; }
-.cat-leg-3{ animation: leg-run-a 0.4s linear infinite; animation-delay:0.2s; }
-.cat-leg-2{ animation: leg-run-b 0.4s linear infinite; }
-.cat-leg-4{ animation: leg-run-b 0.4s linear infinite; animation-delay:0.2s; }
-@keyframes leg-run-a{ 0%,100%{ transform:rotate(25deg);} 50%{ transform:rotate(-25deg);} }
-@keyframes leg-run-b{ 0%,100%{ transform:rotate(-25deg);} 50%{ transform:rotate(25deg);} }
-.cat-eye{ animation: cat-blink 3.2s ease-in-out infinite; transform-origin:center; }
-@keyframes cat-blink{ 0%,92%,100%{ transform:scaleY(1);} 95%{ transform:scaleY(0.1);} }
-
-.loading-cat.walking { animation: cat-run-across 4s linear forwards; }
-@keyframes cat-run-across{ from{ left:-40px;} to{ left:100%;} }
-
-.paw-trail{ position:absolute; inset:0; pointer-events:none; }
-.paw-mark{
-  position:absolute; width:10px; height:10px; border-radius:50%;
-  background: rgba(230, 161, 53, 0.9); box-shadow:0 0 8px 2px rgba(230, 161, 53, 0.6);
-  animation: paw-fade 1.4s ease forwards;
+/* DAISY LOADER CONTAINER */
+.loading-daisy-track{ 
+  position:relative; 
+  width:100%; 
+  height:120px; 
+  display:flex; 
+  align-items:center; 
+  justify-content:center; 
 }
-@keyframes paw-fade{ 0%{ opacity:0.9; transform:scale(1);} 100%{ opacity:0; transform:scale(0.4);} }
+
+/* BLOOMING DAISY SVG & ANIMATIONS */
+.loading-daisy {
+  width: 110px;
+  height: 110px;
+  position: relative;
+  filter: drop-shadow(0 10px 15px rgba(0,0,0,0.35));
+}
+
+.daisy-bloom-svg {
+  width: 100%;
+  height: 100%;
+  animation: daisy-pulse-spin 8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+.daisy-center-gold {
+  fill: var(--daisy-gold);
+  filter: drop-shadow(0 0 6px rgba(247, 179, 43, 0.8));
+  animation: center-glow 2s ease-in-out infinite alternate;
+}
+
+.daisy-center-inner {
+  fill: #E68A00;
+}
+
+.daisy-petal {
+  fill: #FFFFFF;
+  opacity: 0.95;
+  transform-origin: 50px 50px;
+  animation: petal-sway 3s ease-in-out infinite alternate;
+}
+
+/* Stagger petal sway animations */
+.daisy-petal:nth-child(even) {
+  animation-delay: 0.3s;
+}
+
+@keyframes daisy-pulse-spin {
+  0% { transform: scale(0.92) rotate(0deg); }
+  50% { transform: scale(1.08) rotate(180deg); }
+  100% { transform: scale(0.92) rotate(360deg); }
+}
+
+@keyframes center-glow {
+  0% { filter: drop-shadow(0 0 4px rgba(247, 179, 43, 0.6)); }
+  100% { filter: drop-shadow(0 0 12px rgba(247, 179, 43, 0.95)); }
+}
+
+@keyframes petal-sway {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.04); }
+}
+
+/* POLLEN SPARKLE TRAIL */
+.pollen-trail{ position:absolute; inset:0; pointer-events:none; }
+.pollen-mark{
+  position:absolute; width:8px; height:8px; border-radius:50%;
+  background: var(--daisy-gold); box-shadow:0 0 10px 3px rgba(247, 179, 43, 0.8);
+  animation: pollen-fade 1.6s ease forwards;
+}
+@keyframes pollen-fade{ 0%{ opacity:1; transform:scale(1) translateY(0);} 100%{ opacity:0; transform:scale(0.2) translateY(20px);} }
 
 .loading-text-wrap{ width:100%; display:flex; flex-direction:column; gap:10px; align-items:center; }
 .loading-message{
   font-size:1rem; font-weight:600; color:var(--cream); min-height:1.4em;
   letter-spacing:0.3px;
 }
-.paw-progress{ width:100%; display:flex; align-items:center; gap:12px; }
-.paw-progress-track{
+.daisy-progress{ width:100%; display:flex; align-items:center; gap:12px; }
+.daisy-progress-track{
   flex:1; height:14px; border-radius:20px; background:rgba(255,255,255,0.15);
   border:1px solid rgba(156, 175, 136, 0.4); overflow:hidden; position:relative;
 }
-.paw-progress-fill{
+.daisy-progress-fill{
   height:100%; width:0%; border-radius:20px;
   background: linear-gradient(90deg, var(--meadow-green), var(--daisy-yellow));
   transition: width 0.25s ease;
   position:relative;
 }
-.paw-progress-fill::after{
-  content:'🐾'; position:absolute; right:-2px; top:50%; transform:translateY(-50%);
+.daisy-progress-fill::after{
+  content:'🌼'; position:absolute; right:-2px; top:50%; transform:translateY(-50%);
   font-size:12px;
 }
-.paw-progress-percent{ font-weight:700; color:var(--daisy-yellow); min-width:42px; text-align:right; }
+.daisy-progress-percent{ font-weight:700; color:var(--daisy-yellow); min-width:42px; text-align:right; }
 
 /* ============================================================
-   FLOATING DECOR (petals / sparkles / paw prints)
+   FLOATING DECOR (petals / sparkles)
    ============================================================ */
-.decor-petal, .decor-sparkle, .decor-paw{
+.decor-petal, .decor-sparkle{
   position:absolute; pointer-events:none; will-change:transform;
 }
 .decor-petal{
@@ -189,7 +230,6 @@ a{ text-decoration:none; color:inherit; }
   animation: sparkle-twinkle 2.4s ease-in-out infinite;
 }
 @keyframes sparkle-twinkle{ 0%,100%{ opacity:0.15; transform:scale(0.6);} 50%{ opacity:1; transform:scale(1.2);} }
-.decor-paw{ font-size:12px; opacity:0.35; color:var(--sage); }
 
 /* ============================================================
    TYPOGRAPHY
@@ -545,7 +585,6 @@ h1,h2,h3{ font-family: var(--font-display); color:var(--cream); }
   text-align:left; color:var(--ink); height:100%;
 }
 
-/* Scrollable, handwritten-style letter content */
 .letter-paper-scroll{
   padding: 26px 14px 26px 26px;
   overflow-y: auto;
