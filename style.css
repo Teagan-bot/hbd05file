@@ -12,7 +12,6 @@
   --paper-cream: #F9F6F0;
   --text-dark: #222923;
   --text-muted: #5C665A;
-  --pink-accent: #F4C2C2; /* Subtle accent for the retained pink cake elements */
 
   /* Fonts */
   --font-serif: 'Playfair Display', 'Cormorant Garamond', Georgia, serif;
@@ -71,15 +70,12 @@ body {
     radial-gradient(circle at 80% 70%, rgba(226, 160, 63, 0.1) 0%, transparent 25%);
 }
 
-#particle-canvas, #celebration-canvas {
+#celebration-canvas {
   position: fixed;
   inset: 0;
   pointer-events: none;
   width: 100%;
   height: 100%;
-}
-
-#celebration-canvas {
   z-index: 999;
 }
 
@@ -158,9 +154,11 @@ body {
   border: 1.5px solid var(--border-soft-sage);
   border-radius: 16px;
   padding: 2.5rem 2rem;
+  max-width: 580px;
+  width: 100%;
   box-shadow: 
     0 12px 32px rgba(0, 0, 0, 0.25),
-    inset 0 0 40px rgba(230, 220, 205, 0.5); /* Subtle paper texture depth */
+    inset 0 0 40px rgba(230, 220, 205, 0.5);
   position: relative;
 }
 
@@ -169,7 +167,7 @@ body {
    ========================================================================== */
 .script {
   font-family: var(--font-script);
-  font-size: 1.3em;
+  font-size: 1.5em;
   color: var(--highlight-golden-yellow);
 }
 
@@ -182,12 +180,21 @@ body {
   font-weight: 600;
 }
 
+.glass-card .eyebrow {
+  color: var(--text-muted);
+}
+
 .hero-title, .section-title {
   font-family: var(--font-serif);
   font-size: 2.5rem;
   color: var(--highlight-golden-yellow);
   line-height: 1.2;
   margin-bottom: 1rem;
+}
+
+.glass-card .hero-title,
+.glass-card .section-title {
+  color: var(--text-dark);
 }
 
 .hero-subtitle, .section-lead {
@@ -244,6 +251,8 @@ body {
   border-radius: 30px;
   cursor: pointer;
   border: none;
+  display: inline-block;
+  text-decoration: none;
   transition: transform 0.2s var(--transition-smooth), box-shadow 0.2s ease, background 0.3s;
 }
 
@@ -256,17 +265,6 @@ body {
 .btn-primary:hover {
   transform: translateY(-2px);
   box-shadow: 0 6px 20px rgba(226, 160, 63, 0.4);
-}
-
-.btn-secondary {
-  background: transparent;
-  color: var(--text-dark);
-  border: 1.5px solid var(--border-soft-sage);
-}
-
-.btn-secondary:hover {
-  background: rgba(138, 154, 134, 0.15);
-  transform: translateY(-2px);
 }
 
 /* ==========================================================================
@@ -284,22 +282,6 @@ body {
   z-index: 1;
 }
 
-.transparent-bouquet-img,
-.transparent-teddy-img,
-.transparent-cat-img {
-  max-width: 280px;
-  width: 100%;
-  height: auto;
-  filter: drop-shadow(0 15px 25px rgba(0, 0, 0, 0.4));
-  transition: transform 0.5s ease;
-}
-
-.transparent-bouquet-img:hover,
-.transparent-teddy-img:hover,
-.transparent-cat-img:hover {
-  transform: scale(1.04);
-}
-
 /* ==========================================================================
    ENVELOPE & LETTER SECTION
    ========================================================================== */
@@ -309,31 +291,25 @@ body {
 }
 
 .envelope {
-  width: 320px;
-  height: 220px;
+  width: 340px;
+  min-height: 220px;
   background: #233A2E;
   border: 1.5px solid var(--border-soft-sage);
-  border-radius: 8px;
+  border-radius: 12px;
   position: relative;
-  cursor: pointer;
+  padding: 1.5rem;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
 }
 
 .letter-paper {
   background: var(--paper-cream);
   color: var(--text-dark);
-  padding: 1.5rem;
-  border-radius: 6px;
+  padding: 1.8rem;
+  border-radius: 8px;
   font-family: var(--font-serif);
   border: 1px solid var(--border-soft-sage);
   box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.05);
-}
-
-.envelope-hint {
-  margin-top: 1rem;
-  font-size: 0.85rem;
-  color: var(--border-soft-sage);
-  letter-spacing: 1px;
+  text-align: left;
 }
 
 /* ==========================================================================
@@ -348,6 +324,6 @@ body {
 }
 
 /* Hidden elements helper */
-.hidden, .hidden-site {
+.hidden {
   display: none !important;
 }
