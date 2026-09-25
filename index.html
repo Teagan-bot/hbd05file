@@ -1,223 +1,250 @@
-a<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Happy Birthday, Mari 🌼</title>
-<meta name="description" content="A luxury interactive birthday card for Mari — daisy flowers, cozy cats, and warm green wishes.">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Playfair+Display:ital,wght@0,600;0,700;1,600&family=Quicksand:wght@400;500;600;700&family=Caveat:wght@500;600;700&display=swap" rel="stylesheet">
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Mari! 🌼</title>
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Cormorant+Garamond:ital,wght@1,600&family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Quicksand:wght@500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="style.css">
+  
+  <!-- Inline Styles for Pink Cake Override -->
+  <style>
+    /* Pink Birthday Cake Styling */
+    .cake-tier-1 { background: linear-gradient(180deg, #FFB7C5, #FF8DA1) !important; }
+    .cake-tier-2 { background: linear-gradient(180deg, #FFA0B4, #E86F88) !important; }
+    .cake-tier-3 { background: linear-gradient(180deg, #FF8DA1, #D1526D) !important; }
+    .cake-drip { background: radial-gradient(circle, #FFF0F3 40%, transparent 41%) repeat-x !important; background-size:14px 14px !important; }
+    .cake-gold-band { background: #FFD1DC !important; }
+    .cake-berry { background: #FF4D6D !important; }
+    .cake-candle { background: linear-gradient(180deg, #FFD1DC, #FFF0F3) !important; }
+  </style>
 </head>
 <body>
 
-<!-- ================= AMBIENT BACKGROUND ================= -->
-<div class="ambient" aria-hidden="true">
-  <div class="sunrays"></div>
-  <div class="bokeh"></div>
-  <canvas id="particle-canvas"></canvas>
-</div>
-
-<!-- ================= LOADING SCREEN ================= -->
-<div id="loading-screen">
-  <div class="loading-bg" aria-hidden="true">
-    <div class="loading-petals"></div>
-    <div class="loading-sparkles"></div>
+  <!-- AMBIENT BACKGROUND -->
+  <div class="ambient">
+    <div class="sunrays"></div>
+    <div class="bokeh"></div>
+    <canvas id="particle-canvas"></canvas>
   </div>
 
-  <div class="loading-content">
-    <div class="loading-cat-track">
-      <div id="loading-cat" class="loading-cat">
-        <svg viewBox="0 0 200 160" class="cat-run-svg">
-          <ellipse class="cat-shadow" cx="100" cy="150" rx="55" ry="8"/>
-          <g class="cat-body-group">
-            <path class="cat-tail" d="M158 95 Q195 80 185 45 Q180 25 160 35" fill="none" stroke="#2E6F40" stroke-width="14" stroke-linecap="round"/>
-            <ellipse class="cat-body" cx="105" cy="100" rx="55" ry="34" fill="#2E6F40"/>
-            <path class="cat-chest" d="M75 100 Q75 130 105 130 Q135 130 135 100 Z" fill="#F7F5F0"/>
-            <circle class="cat-head" cx="55" cy="70" r="34" fill="#2E6F40"/>
-            <path class="cat-ear-l" d="M32 48 L20 20 L48 42 Z" fill="#2E6F40"/>
-            <path class="cat-ear-r" d="M70 45 L80 15 L52 40 Z" fill="#2E6F40"/>
-            <path class="cat-ear-l-in" d="M32 44 L27 28 L42 40 Z" fill="#E6A135"/>
-            <path class="cat-ear-r-in" d="M64 42 L69 26 L54 38 Z" fill="#E6A135"/>
-            <circle class="cat-eye cat-eye-l" cx="44" cy="66" r="4.5" fill="#1C2A20"/>
-            <circle class="cat-eye cat-eye-r" cx="64" cy="64" r="4.5" fill="#1C2A20"/>
-            <path class="cat-mouth" d="M52 80 Q56 84 60 80" stroke="#1C2A20" stroke-width="2" fill="none" stroke-linecap="round"/>
-            <circle class="cat-nose" cx="56" cy="76" r="2.6" fill="#E6A135"/>
-            <ellipse class="cat-leg cat-leg-1" cx="75" cy="128" rx="7" ry="14" fill="#2E6F40"/>
-            <ellipse class="cat-leg cat-leg-2" cx="95" cy="130" rx="7" ry="14" fill="#2E6F40"/>
-            <ellipse class="cat-leg cat-leg-3" cx="118" cy="130" rx="7" ry="14" fill="#2E6F40"/>
-            <ellipse class="cat-leg cat-leg-4" cx="138" cy="128" rx="7" ry="14" fill="#2E6F40"/>
-          </g>
-        </svg>
-      </div>
-      <div class="paw-trail" id="paw-trail"></div>
-    </div>
+  <!-- CELEBRATION OVERLAY CANVAS -->
+  <canvas id="celebration-canvas"></canvas>
 
-    <div class="loading-text-wrap">
-      <p id="loading-message" class="loading-message">Preparing a Special Birthday Greeting...</p>
-      <div class="paw-progress">
-        <div class="paw-progress-track">
-          <div class="paw-progress-fill" id="paw-progress-fill"></div>
+  <!-- LOADING SCREEN (BLOOMING DAISY) -->
+  <div id="loading-screen">
+    <div class="loading-bg">
+      <div class="loading-petals"></div>
+      <div class="loading-sparkles"></div>
+    </div>
+    <div class="loading-content">
+      <h2 class="loading-title">Gathering Daisies... 🌼</h2>
+      
+      <div class="loading-daisy-track">
+        <div class="loading-daisy">
+          <svg class="daisy-bloom-svg" viewBox="0 0 100 100">
+            <!-- Petals -->
+            <g class="daisy-petals">
+              <ellipse class="daisy-petal" cx="50" cy="18" rx="7" ry="16" />
+              <ellipse class="daisy-petal" cx="50" cy="82" rx="7" ry="16" />
+              <ellipse class="daisy-petal" cx="18" cy="50" rx="16" ry="7" />
+              <ellipse class="daisy-petal" cx="82" cy="50" rx="16" ry="7" />
+              <ellipse class="daisy-petal" cx="27" cy="27" rx="7" ry="16" transform="rotate(-45 27 27)" />
+              <ellipse class="daisy-petal" cx="73" cy="73" rx="7" ry="16" transform="rotate(-45 73 73)" />
+              <ellipse class="daisy-petal" cx="73" cy="27" rx="7" ry="16" transform="rotate(45 73 27)" />
+              <ellipse class="daisy-petal" cx="27" cy="73" rx="7" ry="16" transform="rotate(45 27 73)" />
+            </g>
+            <!-- Flower Center -->
+            <circle class="daisy-center-gold" cx="50" cy="50" r="14" />
+            <circle class="daisy-center-inner" cx="50" cy="50" r="10" />
+          </svg>
         </div>
-        <span class="paw-progress-percent" id="loading-percent">0%</span>
+        <div class="pollen-trail" id="pollen-trail"></div>
+      </div>
+
+      <div class="loading-text-wrap">
+        <div class="loading-message" id="loading-msg">Preparing Mari's garden...</div>
+        <div class="daisy-progress">
+          <div class="daisy-progress-track">
+            <div class="daisy-progress-fill" id="progress-fill"></div>
+          </div>
+          <span class="daisy-progress-percent" id="progress-text">0%</span>
+        </div>
       </div>
     </div>
-    <p class="loading-title">Happy Birthday, Mari 🌼</p>
   </div>
-</div>
-
-<!-- ================= MAIN SITE ================= -->
-<main id="site" class="hidden-site">
 
   <!-- MUSIC PLAYER -->
-  <div class="music-player" id="music-player">
-    <audio id="bg-music" loop preload="none">
-      <source src="birthday-music.mp3" type="audio/mpeg">
-    </audio>
-    <button id="music-toggle" class="music-btn" aria-label="Play or pause music">
-      <span id="music-icon">🎵</span>
-    </button>
-    <div class="music-panel" id="music-panel">
-      <button id="mute-toggle" class="music-mini-btn" aria-label="Mute">🔊</button>
-      <input type="range" id="volume-slider" min="0" max="100" value="55" aria-label="Volume">
+  <div class="music-player">
+    <button class="music-btn" id="music-toggle" aria-label="Toggle Music">🎵</button>
+    <div class="music-panel">
+      <button class="music-mini-btn" id="prev-track" title="Previous">⏮</button>
+      <button class="music-mini-btn" id="next-track" title="Next">⏭</button>
+      <input type="range" id="volume-slider" min="0" max="1" step="0.05" value="0.7" title="Volume">
     </div>
   </div>
-  <div id="music-prompt" class="music-prompt">🎵 Tap anywhere to start the birthday music</div>
+  <div class="music-prompt" id="music-prompt">Click anywhere for music ✨</div>
 
-  <!-- NAV DOTS -->
-  <nav class="dot-nav" aria-label="Section navigation">
-    <a href="#hero" class="dot active" data-label="Welcome"></a>
+  <!-- DOT NAVIGATION -->
+  <nav class="dot-nav">
+    <a href="#hero" class="dot active" data-label="Home"></a>
     <a href="#bouquet" class="dot" data-label="Bouquet"></a>
-    <a href="#teddy" class="dot" data-label="Teddy"></a>
+    <a href="#teddy" class="dot" data-label="Teddy Bear"></a>
     <a href="#companion" class="dot" data-label="Companion"></a>
-    <a href="#cake" class="dot" data-label="Wish"></a>
+    <a href="#cake" class="dot" data-label="Make a Wish"></a>
     <a href="#letter" class="dot" data-label="Letter"></a>
   </nav>
 
-  <!-- ================= HERO ================= -->
-  <section id="hero" class="section hero-section">
-    <div class="hero-glow"></div>
-    <div class="hero-content glass-card">
-      <p class="eyebrow">🌼 🌼 Wishing You a Wonderful Birthday 🌼 🌼</p>
-      <h1 class="hero-title">Happy Birthday, <span class="script">Mari</span>! 🎉 <span class="emoji-pop">🎂✨</span></h1>
-      <p class="hero-subtitle">"Wishing you happiness, good health, and many blooming moments throughout the year."</p>
+  <!-- MAIN SITE CONTENT -->
+  <div id="site" class="hidden-site">
 
-      <div class="hero-scene">
-        <div class="hero-cake-wrap" id="hero-cake-wrap"></div>
-        <div class="hero-bouquet-mini" id="hero-bouquet-mini"></div>
-        <div class="hero-cat-wrap" id="hero-cat"></div>
-      </div>
-
-      <div class="hero-buttons">
-        <button class="btn btn-primary" id="celebrate-btn">✨ Celebrate</button>
-        <button class="btn btn-secondary" id="wish-scroll-btn">🕯️ Make a Wish</button>
-        <button class="btn btn-secondary" id="letter-scroll-btn">💌 Open Birthday Letter</button>
-      </div>
-    </div>
-    <div class="scroll-hint">scroll to explore ↓</div>
-  </section>
-
-  <!-- ================= BOUQUET ================= -->
-  <section id="bouquet" class="section bouquet-section">
-    <p class="section-eyebrow">A small gift of flowers for your special day</p>
-    <h2 class="section-title">A Bouquet of Daisy Wishes</h2>
-    <p class="section-lead">A bouquet filled with warm wishes, fresh energy, and happiness for your birthday.</p>
-
-    <div class="bouquet-stage" id="bouquet-stage">
-      <div class="bouquet-transparent-wrap">
-        <div class="bouquet-glow" aria-hidden="true"></div>
-        <img src="bouquet.png"
-             alt="A gorgeous daisy flower bouquet"
-             id="real-bouquet-img"
-             class="transparent-bouquet-img">
-      </div>
-    </div>
-  </section>
-
-  <!-- ================= TEDDY BEAR ================= -->
-  <section id="teddy" class="section teddy-section">
-    <p class="section-eyebrow">🧸 A Soft Embrace</p>
-    <h2 class="section-title">A Little Birthday Teddy</h2>
-    <p class="section-lead">A small birthday companion bringing warm wishes and smiles your way.</p>
-
-    <div class="teddy-transparent-wrap">
-      <div class="teddy-glow" aria-hidden="true"></div>
-      <img src="teddy.png"
-           alt="Mari's cozy birthday teddy bear"
-           id="teddy-photo"
-           class="transparent-teddy-img">
-    </div>
-    <p class="teddy-caption">"Wishing you comfort, happiness, and a wonderful year ahead."</p>
-  </section>
-
-  <!-- ================= CAT COMPANION ================= -->
-  <section id="companion" class="section companion-section">
-    <p class="section-eyebrow">🐾 A Little Cat Friend</p>
-    <h2 class="section-title">A Small Friend Bringing Birthday Smiles</h2>
-
-    <div class="companion-transparent-wrap">
-      <div class="companion-glow"></div>
-      <img src="birthday-cat.png"
-           alt="Mari's beloved cat"
-           id="companion-photo"
-           class="transparent-cat-img">
-    </div>
-
-    <p class="companion-caption">"May every day bring you as much happiness as this little friend."</p>
-  </section>
-
-  <!-- ================= CAKE + WISH ================= -->
-  <section id="cake" class="section cake-section">
-    <p class="section-eyebrow">Your Birthday Moment</p>
-    <h2 class="section-title">Make a Birthday Wish</h2>
-
-    <div class="cake-stage" id="cake-stage"></div>
-
-    <div class="wish-card glass-card" id="wish-card">
-      <h3 class="wish-title">✨ Make a Wish ✨</h3>
-      <p class="wish-text">Close your eyes.<br>Think of something that makes you happy.<br>Make a wish.<br>Then tap the candle.</p>
-      <p class="wish-sent hidden" id="wish-sent">✨ Your wish has been sent.<br><strong>Happy Birthday, Mari!</strong></p>
-    </div>
-  </section>
-
-  <!-- ================= LETTER ================= -->
-  <section id="letter" class="section letter-section">
-    <p class="section-eyebrow">A Simple Birthday Greeting</p>
-    <h2 class="section-title">A Little Letter For You</h2>
-
-    <div class="envelope-wrap">
-      <div class="envelope" id="envelope">
-        <div class="envelope-back"></div>
-        <div class="envelope-letter" id="envelope-letter">
-          <div class="letter-paper letter-paper-scroll">
-            <p class="letter-greeting">Happy Birthday, Mari!</p>
-
-            <p>Maligayang kaarawan, Binibining Mari. 🌼</p>
-
-            <p class="letter-signoff">
-              Taos-pusong bumabati,<br>
-              <span class="script">Teagan ✨</span>
-            </p>
+    <!-- HERO SECTION -->
+    <section id="hero" class="section hero-section">
+      <div class="hero-glow"></div>
+      <div class="hero-content glass-card">
+        <p class="eyebrow">A Special Day For A Special Someone</p>
+        <h1 class="hero-title">Happy Birthday, Mari! <span class="emoji-pop">✨</span></h1>
+        <p class="hero-subtitle">May your day bloom with as much joy, warmth, and brightness as a field of daisies in spring.</p>
+        
+        <!-- HERO MINI SCENE -->
+        <div class="hero-scene">
+          <div class="hero-cake-wrap">
+            <div class="cake">
+              <div class="cake-glow" id="hero-cake-glow"></div>
+              <div class="cake-candle">
+                <div class="cake-flame" id="hero-cake-flame"></div>
+              </div>
+              <div class="cake-tier cake-tier-1">
+                <div class="cake-drip"></div>
+              </div>
+              <div class="cake-tier cake-tier-2">
+                <div class="cake-gold-band"></div>
+              </div>
+              <div class="cake-tier cake-tier-3">
+                <div class="cake-gold-band"></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="envelope-flap"></div>
+
+        <div class="hero-buttons">
+          <a href="#cake" class="btn btn-primary">Make a Wish 🎂</a>
+          <a href="#letter" class="btn btn-secondary">Read Letter ✉️</a>
+        </div>
       </div>
-      <p class="envelope-hint" id="envelope-hint">tap the envelope to open</p>
-    </div>
-  </section>
+      <div class="scroll-hint">Scroll down to explore ↓</div>
+    </section>
 
-  <footer class="site-footer">
-    <p>Made with warm birthday wishes and a little bit of cat magic. 🎂🐾</p>
-  </footer>
+    <!-- BOUQUET SECTION -->
+    <section id="bouquet" class="section">
+      <div class="glass-card" style="padding: 40px 30px; max-width: 500px;">
+        <span class="section-eyebrow">A Floral Gift</span>
+        <h2 class="section-title">Fresh Daisies & Blossoms</h2>
+        <div class="bouquet-transparent-wrap">
+          <div class="bouquet-glow"></div>
+          <!-- Add your bouquet image path below -->
+          <img src="bouquet.png" alt="Flowers for Mari" class="transparent-bouquet-img" onerror="this.src='https://images.unsplash.com/photo-1563241527-3004b7be0ffd?w=500&auto=format&fit=crop&q=80'">
+        </div>
+        <p class="section-lead" style="margin-top: 20px; margin-bottom: 0;">A sweet bouquet picked especially to celebrate you today.</p>
+      </div>
+    </section>
 
-</main>
+    <!-- TEDDY BEAR SECTION -->
+    <section id="teddy" class="section">
+      <div class="glass-card" style="padding: 40px 30px; max-width: 500px;">
+        <span class="section-eyebrow">Warm Wishes</span>
+        <h2 class="section-title">A Soft Hug For You</h2>
+        <div class="teddy-transparent-wrap">
+          <div class="teddy-glow"></div>
+          <!-- Add your teddy bear image path below -->
+          <img src="teddy.png" alt="Teddy Bear" class="transparent-teddy-img" onerror="this.src='https://images.unsplash.com/photo-1559454403-b8fb88521f11?w=500&auto=format&fit=crop&q=80'">
+        </div>
+        <p class="teddy-caption">Sending you endless comfort, smiles, and bear hugs!</p>
+      </div>
+    </section>
 
-<!-- Celebration overlay canvas -->
-<canvas id="celebration-canvas"></canvas>
+    <!-- COMPANION SECTION -->
+    <section id="companion" class="section">
+      <div class="glass-card" style="padding: 40px 30px; max-width: 500px;">
+        <span class="section-eyebrow">Little Buddy</span>
+        <h2 class="section-title">Your Birthday Companion</h2>
+        <div class="companion-transparent-wrap">
+          <div class="companion-glow"></div>
+          <!-- Add your companion/cat image path below -->
+          <img src="cat.png" alt="Companion" class="transparent-cat-img" onerror="this.src='https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?w=500&auto=format&fit=crop&q=80'">
+        </div>
+        <p class="companion-caption">Here to celebrate and purr alongside you all day long!</p>
+      </div>
+    </section>
 
-<script src="script.js"></script>
+    <!-- CAKE / WISH SECTION -->
+    <section id="cake" class="section">
+      <span class="section-eyebrow">Blow Out The Candle</span>
+      <h2 class="section-title">Make a Birthday Wish</h2>
+      
+      <div class="cake-stage" id="cake-interactive">
+        <div class="cake">
+          <div class="cake-glow" id="main-cake-glow"></div>
+          <div class="cake-candle">
+            <div class="cake-flame" id="main-cake-flame"></div>
+            <div class="cake-smoke" id="cake-smoke"></div>
+          </div>
+          <div class="cake-tier cake-tier-1">
+            <div class="cake-drip"></div>
+          </div>
+          <div class="cake-tier cake-tier-2">
+            <div class="cake-gold-band"></div>
+          </div>
+          <div class="cake-tier cake-tier-3">
+            <div class="cake-gold-band"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="glass-card wish-card">
+        <h3 class="wish-title" id="wish-heading">Click or Blow to extinguish the candle!</h3>
+        <p class="wish-text" id="wish-subtext">Close your eyes, think of a lovely wish, and click the candle when you're ready.</p>
+        <div class="wish-sent hidden" id="wish-sent-msg">✨ May all your birthday wishes come true, Mari! ✨</div>
+      </div>
+    </section>
+
+    <!-- LETTER SECTION -->
+    <section id="letter" class="section">
+      <span class="section-eyebrow">A Note For You</span>
+      <h2 class="section-title">A Special Letter</h2>
+      
+      <div class="envelope-wrap">
+        <div class="envelope" id="envelope">
+          <div class="envelope-back"></div>
+          <div class="envelope-letter">
+            <div class="letter-paper">
+              <div class="letter-paper-scroll">
+                <div class="letter-greeting">Dearest Mari,</div>
+                <p>Happy Birthday! Today is all about celebrating the beautiful, wonderfully kind person that you are.</p>
+                <p>Thank you for bringing so much brightness, warmth, and laughter everywhere you go. Like a garden full of blooming daisies, your presence makes everything feel a little happier and full of life.</p>
+                <p>I hope this year ahead brings you endless happiness, exciting new adventures, good health, and all the sweet moments you deserve.</p>
+                <div class="letter-signoff">With lots of love, ❤️</div>
+              </div>
+            </div>
+          </div>
+          <div class="envelope-flap"></div>
+        </div>
+        <p class="envelope-hint">Click the envelope to open your letter</p>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="site-footer">
+      <p>Made with 💛 for Mari's Birthday</p>
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
